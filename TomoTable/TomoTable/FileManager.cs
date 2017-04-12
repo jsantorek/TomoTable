@@ -8,6 +8,10 @@ namespace TomoTable
 {
     static class FileManager
     {
+        // .bmp resolution
+        public static int x = 64;
+        public static int y = 32;
+
         /// <summary>
         /// Function converting .bmp file into output data of neural network.
         /// If .bmp file is shorter than network's output, rest of array is filled with zeroes.

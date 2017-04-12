@@ -6,25 +6,39 @@ using System.Threading.Tasks;
 
 namespace TomoTable
 {
+    // TODO : check if iterating through list with foreach ensures (its absolutely crucial) exactly the same order on each iteration, if not change it
     class NeuronNetwork
     {
-
         // length of input vectors
-        public static int iSize = 32;
+        public static int iSize = 31;
 
-        // length of output vector
-        static int oSize = 2048;
+        // length of output vector, related to image resolution
+        static int oSize = FileManager.x * FileManager.y;
 
-        private List<double> all_inputs;
+        // numbers of neurons in each layer in consecutive order including input and output layers
+        private static int [] layerSizes = { 32, 10, 10, oSize };
+
+        // learning constants
+        private double learningSpeed = 0.3;
+        private double learningMomentum = 0.5;
+
         private List<List<Neuron>> neurons;
 
-        NeuronNetwork()
+        public NeuronNetwork()
         {
-            int n_layers = 4;
-            for (int i = 0; i <= n_layers; i++)
+            for(int nLayer = 0, lastLayerSize = iSize; nLayer < layerSizes.Length; nLayer++)
             {
-                int n_inlayer = (i == 0) ? iSize : (i == n_layers) ? oSize : 10;
+                int layerSize = layerSizes[nLayer];
 
+                // I think initializing with capacitance saves some memory, this is probably not neccessary
+                List<Neuron> layer = new List<Neuron>(layerSize);
+
+                for(int nNeuron = 0; nNeuron < layerSize; nNeuron++)
+                {
+                    layer.Add(new Neuron(lastLayerSize));
+                }
+                lastLayerSize = layerSize;
+                neurons.Add(layer);
             }
         }
 
@@ -38,9 +52,36 @@ namespace TomoTable
         /// <param name="input"> input vector </param>
         /// <param name="output"> expected output vector </param>
         /// <returns></returns>
-        public bool train(double maxError, int maxEpochs, List<double> input, List<double> output)
+        public bool train(double maxError, int maxEpochs, List<List<double>> inputsList, List<List<double>> outputsList)
         {
+            // primitive input and test data check, no error handling
+            if (maxError < 0.0 || inputsList.Count != outputsList.Count)
+                return false;
+            for (int training = 0; training < inputsList.Count; training++)
+            {
+                if (inputsList[training].Count != iSize * layerSizes[0] || outputsList[training].Count != oSize)
+                    return false;
+            }
 
+            for (int epoch = 0; epoch < maxEpochs; epoch++)
+            {
+                double error = 0.0;
+
+                // in each epoch run every available training once
+                for(int training = 0; training < inputsList.Count; training++)
+                {
+                    feedInput(inputsList[training]);
+                    fwdPropagate();
+                    bckPropagate(outputsList[training]);
+                    //error += getMSE(); how to get error?
+                    error += 1.0;
+                }
+
+                // calculate average Mean Square Error from this epoch
+                error /= inputsList.Count;
+                if (error < maxError)
+                    return true;
+            }
             return false;
         }
 
@@ -51,8 +92,28 @@ namespace TomoTable
         /// <returns></returns>
         public List<double> evaluate(List<double> input)
         {
+            // primitive check if the input is propperly formatted
+            if (input.Count != iSize * layerSizes[0])
+                return null;
+            feedInput(input);
+            fwdPropagate();
+            return getLastOutput();
+        }
 
-            return null;
+        /// <summary>
+        /// Function returning a list of results from previously evaluated by network input
+        /// </summary>
+        /// <returns></returns>
+        public List<double> getLastOutput()
+        {
+            // I think initializing with capacitance saves some memory, this is probably not neccessary
+            List<double> output = new List<double>(oSize);
+            int outputLayer = neurons.Count - 1;
+            for (int i = 0; i<neurons[outputLayer].Count; i++)
+            {
+                output.Add(neurons[outputLayer][i].getOutput());
+            }
+            return output;
         }
 
         /// <summary>
@@ -77,17 +138,41 @@ namespace TomoTable
 
         private void fwdPropagate()
         {
+            // iterate through every layer in order
+            for (int layer_i = 0; layer_i < neurons.Count; layer_i++)
+            {
+                // iterate thorugh every neuron in given layer and update it with new input
+                for (int neuron_i = 0; neuron_i < neurons[layer_i].Count; neuron_i++)
+                {
+                    neurons[layer_i][neuron_i].update();
 
+                    // if this is not output layer...
+                    if(layer_i < neurons[layer_i].Count-1)
+                    {
+                        double output = neurons[layer_i][neuron_i].getOutput();
+                        // pass new calculated value with propper index into each neuron in next layer
+                        for (int neuronNext_i = 0; neuronNext_i < neurons[layer_i+1].Count; neuronNext_i++)
+                        {
+                            neurons[layer_i+1][neuronNext_i].feed(output, neuron_i);
+                        }
+                    }
+                }
+            }
         }
 
-        private void bckPropagate()
+        private void bckPropagate(List<double> expected)
         {
 
         }
 
-        private void feedInput()
+        private void feedInput(List<double> input)
         {
-
+            for (int i = 0; i < neurons[0].Count; i++)
+            {
+                // TODO : make sure this returns propper ranges, should be:
+                // 0-31, 32-63, 64-95...
+                neurons[0][i].feed(input.GetRange(i * iSize, iSize).ToArray());
+            }
         }
     }
 }
