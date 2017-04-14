@@ -52,7 +52,7 @@ namespace TomoTable
         /// <param name="input"> input vector </param>
         /// <param name="output"> expected output vector </param>
         /// <returns></returns>
-        public bool train(double maxError, int maxEpochs, List<List<double>> inputsList, List<List<double>> outputsList)
+        public bool Train(double maxError, int maxEpochs, List<List<double>> inputsList, List<List<double>> outputsList)
         {
             // primitive input and test data check, no error handling
             if (maxError < 0.0 || inputsList.Count != outputsList.Count)
@@ -70,9 +70,9 @@ namespace TomoTable
                 // in each epoch run every available training once
                 for(int training = 0; training < inputsList.Count; training++)
                 {
-                    feedInput(inputsList[training]);
-                    fwdPropagate();
-                    bckPropagate(outputsList[training]);
+                    FeedInput(inputsList[training]);
+                    ForwardPropagate();
+                    BackPropagate(outputsList[training]);
                     //error += getMSE(); how to get error?
                     error += 1.0;
                 }
@@ -90,28 +90,28 @@ namespace TomoTable
         /// </summary>
         /// <param name="input"> input to be evaluated </param>
         /// <returns></returns>
-        public List<double> evaluate(List<double> input)
+        public List<double> Evaluate(List<double> input)
         {
             // primitive check if the input is propperly formatted
             if (input.Count != iSize * layerSizes[0])
                 return null;
-            feedInput(input);
-            fwdPropagate();
-            return getLastOutput();
+            FeedInput(input);
+            ForwardPropagate();
+            return GetLastOutput();
         }
 
         /// <summary>
         /// Function returning a list of results from previously evaluated by network input
         /// </summary>
         /// <returns></returns>
-        public List<double> getLastOutput()
+        public List<double> GetLastOutput()
         {
             // I think initializing with capacitance saves some memory, this is probably not neccessary
             List<double> output = new List<double>(oSize);
             int outputLayer = neurons.Count - 1;
             for (int i = 0; i<neurons[outputLayer].Count; i++)
             {
-                output.Add(neurons[outputLayer][i].getOutput());
+                output.Add(neurons[outputLayer][i].GetOutput());
             }
             return output;
         }
@@ -120,7 +120,7 @@ namespace TomoTable
         /// Function saving current state of neural network to file specified.
         /// </summary>
         /// <param name="fpath"> path where network should be saved </param>
-        public void save(string fpath)
+        public void Save(string fpath)
         {
 
         }
@@ -130,13 +130,13 @@ namespace TomoTable
         /// </summary>
         /// <param name="fpath"> path to file containing saved network </param>
         /// <returns></returns>
-        public NeuronNetwork load(string fpath)
+        public NeuronNetwork Load(string fpath)
         {
 
             return null;
         }
 
-        private void fwdPropagate()
+        private void ForwardPropagate()
         {
             // iterate through every layer in order
             for (int layer_i = 0; layer_i < neurons.Count; layer_i++)
@@ -144,34 +144,34 @@ namespace TomoTable
                 // iterate thorugh every neuron in given layer and update it with new input
                 for (int neuron_i = 0; neuron_i < neurons[layer_i].Count; neuron_i++)
                 {
-                    neurons[layer_i][neuron_i].update();
+                    neurons[layer_i][neuron_i].Update();
 
                     // if this is not output layer...
                     if(layer_i < neurons[layer_i].Count-1)
                     {
-                        double output = neurons[layer_i][neuron_i].getOutput();
+                        double output = neurons[layer_i][neuron_i].GetOutput();
                         // pass new calculated value with propper index into each neuron in next layer
                         for (int neuronNext_i = 0; neuronNext_i < neurons[layer_i+1].Count; neuronNext_i++)
                         {
-                            neurons[layer_i+1][neuronNext_i].feed(output, neuron_i);
+                            neurons[layer_i+1][neuronNext_i].Feed(output, neuron_i);
                         }
                     }
                 }
             }
         }
 
-        private void bckPropagate(List<double> expected)
+        private void BackPropagate(List<double> expected)
         {
 
         }
 
-        private void feedInput(List<double> input)
+        private void FeedInput(List<double> input)
         {
             for (int i = 0; i < neurons[0].Count; i++)
             {
                 // TODO : make sure this returns propper ranges, should be:
                 // 0-31, 32-63, 64-95...
-                neurons[0][i].feed(input.GetRange(i * iSize, iSize).ToArray());
+                neurons[0][i].Feed(input.GetRange(i * iSize, iSize).ToArray());
             }
         }
     }

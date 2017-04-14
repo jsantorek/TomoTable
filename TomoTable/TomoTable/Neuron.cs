@@ -25,7 +25,7 @@ namespace TomoTable
             error = 0.0;
         }
 
-        public void feed(double [] newinput)
+        public void Feed(double [] newinput)
         {
             for(int i = 0; i < inputs.Length; i++)
             {
@@ -33,37 +33,37 @@ namespace TomoTable
             }
         }
 
-        public void feed(double newinput, int index)
+        public void Feed(double newinput, int index)
         {
             inputs[index] = newinput;
         }
 
-        public void update()
+        public void Update()
         {
             sum = 0.0;
             for(int i = 0; i < weights.Length; i++)
             {
                 sum += weights[i] * inputs[i];
             }
-            output = f(sum);
+            output = F(sum);
         }
 
-        public void adjust()
+        public void Adjust()
         {
 
         }
 
-        public double getOutput()
+        public double GetOutput()
         {
             return output;
         }
 
-        private double f(double x)
+        private double F(double x)
         {
             return 0.0;
         }
 
-        private double df(double x)
+        private double DF(double x)
         {
             return 0.0;
         }
