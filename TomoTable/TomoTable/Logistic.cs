@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TomoTable
+{
+    class Logistic : IActivationFunction
+    {
+        public double df(double x)
+        {
+            return 1 / (1 + Math.Exp(-x));
+        }
+
+        public double f(double x)
+        {
+            return f(x) * (1 - f(x));
+        }
+    }
+}

@@ -43,14 +43,94 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Synapse.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="IActivationFunction.cs" />
     <Compile Include="Neuron.cs" />
-    <Compile Include="NeuronNetwork.cs" />
+    <Compile Include="NeuralNetwork.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Logistic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="training\expected\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="training\expected\0.bmp" />
+    <Content Include="training\expected\1.bmp" />
+    <Content Include="training\expected\1.jpg" />
+    <Content Include="training\expected\10.bmp" />
+    <Content Include="training\expected\10.jpg" />
+    <Content Include="training\expected\11.bmp" />
+    <Content Include="training\expected\11.jpg" />
+    <Content Include="training\expected\12.bmp" />
+    <Content Include="training\expected\12.jpg" />
+    <Content Include="training\expected\13.bmp" />
+    <Content Include="training\expected\13.jpg" />
+    <Content Include="training\expected\14.bmp" />
+    <Content Include="training\expected\14.jpg" />
+    <Content Include="training\expected\15.BMP" />
+    <Content Include="training\expected\15.jpg" />
+    <Content Include="training\expected\16.BMP" />
+    <Content Include="training\expected\16.jpg" />
+    <Content Include="training\expected\17.bmp" />
+    <Content Include="training\expected\17.jpg" />
+    <Content Include="training\expected\18.bmp" />
+    <Content Include="training\expected\18.jpg" />
+    <Content Include="training\expected\19.bmp" />
+    <Content Include="training\expected\19.jpg" />
+    <Content Include="training\expected\2.bmp" />
+    <Content Include="training\expected\2.jpg" />
+    <Content Include="training\expected\20.bmp" />
+    <Content Include="training\expected\20.jpg" />
+    <Content Include="training\expected\21.bmp" />
+    <Content Include="training\expected\21.jpg" />
+    <Content Include="training\expected\22.bmp" />
+    <Content Include="training\expected\22.jpg" />
+    <Content Include="training\expected\22.png" />
+    <Content Include="training\expected\23.bmp" />
+    <Content Include="training\expected\23.jpg" />
+    <Content Include="training\expected\3.bmp" />
+    <Content Include="training\expected\3.jpg" />
+    <Content Include="training\expected\4.bmp" />
+    <Content Include="training\expected\4.jpg" />
+    <Content Include="training\expected\5.bmp" />
+    <Content Include="training\expected\5.jpg" />
+    <Content Include="training\expected\6.bmp" />
+    <Content Include="training\expected\6.jpg" />
+    <Content Include="training\expected\7.bmp" />
+    <Content Include="training\expected\7.jpg" />
+    <Content Include="training\expected\8.bmp" />
+    <Content Include="training\expected\8.jpg" />
+    <Content Include="training\expected\9.bmp" />
+    <Content Include="training\expected\9.jpg" />
+    <Content Include="training\input\0.txt" />
+    <Content Include="training\input\1.txt" />
+    <Content Include="training\input\10 bb.txt" />
+    <Content Include="training\input\11 bb.txt" />
+    <Content Include="training\input\12 bb.txt" />
+    <Content Include="training\input\13 bb.txt" />
+    <Content Include="training\input\14 bb.txt" />
+    <Content Include="training\input\15 bb.txt" />
+    <Content Include="training\input\16 bb.txt" />
+    <Content Include="training\input\17 bb.txt" />
+    <Content Include="training\input\18 bb.txt" />
+    <Content Include="training\input\19 bb.txt" />
+    <Content Include="training\input\2 bb.txt" />
+    <Content Include="training\input\2.txt" />
+    <Content Include="training\input\20 bb.txt" />
+    <Content Include="training\input\21 bb.txt" />
+    <Content Include="training\input\22 bb.txt" />
+    <Content Include="training\input\23 bb.txt" />
+    <Content Include="training\input\3 bb.txt" />
+    <Content Include="training\input\3.txt" />
+    <Content Include="training\input\4 bb.txt" />
+    <Content Include="training\input\5 bb.txt" />
+    <Content Include="training\input\6 bb.txt" />
+    <Content Include="training\input\7 bb.txt" />
+    <Content Include="training\input\8 bb.txt" />
+    <Content Include="training\input\9 bb.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

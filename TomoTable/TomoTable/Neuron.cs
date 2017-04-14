@@ -8,64 +8,70 @@ namespace TomoTable
 {
     class Neuron
     {
-        private double [] weights, inputs, last_dWeigts;
-        private double output, error, sum;
+        #region -- Properties --
+        public List<Synapse> InputSynapses { get; set; }
+        public List<Synapse> OutputSynapses { get; set; }
+        public double Bias { get; set; }
+        public double BiasDelta { get; set; }
+        public double Gradient { get; set; }
+        public double Value { get; set; }
+        private IActivationFunction ActivationFunction;
+        #endregion
 
-        public Neuron(int n)
+        #region -- Constructors --
+        public Neuron(IActivationFunction af)
         {
-            Random rnd = new Random();
-            inputs = Enumerable
-                .Repeat(0.0, n)
-                .ToArray();
-            weights = Enumerable
-                .Repeat(0.0, n)
-                .Select(i => rnd.NextDouble())
-                .ToArray();
-            output = 0.0;
-            error = 0.0;
+            InputSynapses = new List<Synapse>();
+            OutputSynapses = new List<Synapse>();
+            Bias = NeuralNetwork.GetRandom();
+            ActivationFunction = af;
         }
 
-        public void feed(double [] newinput)
+        public Neuron(IEnumerable<Neuron> inputNeurons, IActivationFunction af)
+            : this(af)
         {
-            for(int i = 0; i < inputs.Length; i++)
+            foreach (var inputNeuron in inputNeurons)
             {
-                inputs[i] = newinput[i];
+                var synapse = new Synapse(inputNeuron, this);
+                inputNeuron.OutputSynapses.Add(synapse);
+                InputSynapses.Add(synapse);
             }
         }
+        #endregion
 
-        public void feed(double newinput, int index)
+        #region -- Values & Weights --
+        public virtual double CalculateValue()
         {
-            inputs[index] = newinput;
+            return Value = ActivationFunction.f(InputSynapses.Sum(a => a.Weight * a.InputNeuron.Value) + Bias);
         }
 
-        public void update()
+        public double CalculateError(double target)
         {
-            sum = 0.0;
-            for(int i = 0; i < weights.Length; i++)
+            return target - Value;
+        }
+
+        public double CalculateGradient(double? target = null)
+        {
+            if (target == null)
+                return Gradient = OutputSynapses.Sum(a => a.OutputNeuron.Gradient * a.Weight) * ActivationFunction.df(Value);
+
+            return Gradient = CalculateError(target.Value) * ActivationFunction.df(Value);
+        }
+
+        public void UpdateWeights(double learnRate, double momentum)
+        {
+            var prevDelta = BiasDelta;
+            BiasDelta = learnRate * Gradient;
+            Bias += BiasDelta + momentum * prevDelta;
+
+            foreach (var synapse in InputSynapses)
             {
-                sum += weights[i] * inputs[i];
+                prevDelta = synapse.WeightDelta;
+                synapse.WeightDelta = learnRate * Gradient * synapse.InputNeuron.Value;
+                synapse.Weight += synapse.WeightDelta + momentum * prevDelta;
             }
-            output = f(sum);
         }
+        #endregion
 
-        public void adjust()
-        {
-
-        }
-
-        public double getOutput()
-        {
-            return output;
-        }
-
-        private double f(double x)
-        {
-            return 0.0;
-        }
-
-        private double df(double x)
-        {
-            return 0.0;
-        }
     }
 }
