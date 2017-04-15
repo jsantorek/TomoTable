@@ -18,7 +18,7 @@ namespace TomoTable
         /// </summary>
         /// <param name="fpath"> path to .bmp file </param>
         /// <returns></returns>
-        public double [] BMPtoOUT(string fpath)
+        public static double [] BMPtoOUT(string fpath)
         {
 
             return null;
@@ -29,7 +29,7 @@ namespace TomoTable
         /// </summary>
         /// <param name="fpath"> path to file to be created </param>
         /// <param name="output"> output data of neural network </param>
-        public void OUTtoBMP(string fpath, double [] output)
+        public static void OUTtoBMP(string fpath, double [] output)
         {
 
         }
@@ -39,7 +39,7 @@ namespace TomoTable
         /// Function converting data read from table into into input for neural network.
         /// </summary>
         /// <param name="fpath"> path of file containing table readings in matrix form </param>
-        public void DATAtoIN(string fpath)
+        public static void DATAtoIN(string fpath)
         {
 
         }
@@ -49,7 +49,7 @@ namespace TomoTable
         /// </summary>
         /// <param name="o"> output of single neuron </param>
         /// <returns></returns>
-        private double toColor(double o)
+        private static double ToColor(double o)
         {
             return 0.0;
         }
@@ -59,7 +59,7 @@ namespace TomoTable
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        private double toOutput(double c)
+        private static double ToOutput(double c)
         {
 
             return 0.0;
