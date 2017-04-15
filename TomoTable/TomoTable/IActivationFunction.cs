@@ -8,7 +8,7 @@ namespace TomoTable
 {
     interface IActivationFunction
     {
-        public abstract double f(double x);
-        public abstract double df(double x);
+        double f(double x);
+        double df(double x);
     }
 }

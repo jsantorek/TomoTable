@@ -8,12 +8,12 @@ namespace TomoTable
 {
     class Logistic : IActivationFunction
     {
-        public double df(double x)
+        public double f(double x)
         {
             return 1 / (1 + Math.Exp(-x));
         }
 
-        public double f(double x)
+        public double df(double x)
         {
             return f(x) * (1 - f(x));
         }

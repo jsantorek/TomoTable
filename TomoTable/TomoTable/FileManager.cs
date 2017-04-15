@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TomoTable
 {
-    static class FileManager
+    class FileManager
     {
         // .bmp resolution
         public static int x = 64;

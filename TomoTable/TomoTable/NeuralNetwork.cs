@@ -9,16 +9,14 @@ namespace TomoTable
     class NeuralNetwork
     {
         // length of input vectors
-        public static int InputSize = 31;
+        public static int InputSize = 2;
 
         // length of output vector, related to image resolution
-        private static int OutputSize = FileManager.x * FileManager.y;
+        private static int OutputSize = 1;// FileManager.x * FileManager.y;
 
         // learning constants
         private double LearningSpeed;
         private double LearningMomentum;
-
-        private bool isBiased = true;
 
         private List<Neuron> InputLayer;
         private List<Neuron> HiddenLayer;
@@ -37,14 +35,16 @@ namespace TomoTable
             HiddenLayer = new List<Neuron>();
             OutputLayer = new List<Neuron>();
 
+            Logistic logistic = new Logistic();
+
             for (var i = 0; i < InputSize; i++)
-                InputLayer.Add(new Neuron(new Logistic() as IActivationFunction));
+                InputLayer.Add(new Neuron(logistic as IActivationFunction));
 
             for (var i = 0; i < hiddenSize; i++)
-                HiddenLayer.Add(new Neuron(InputLayer, new Logistic() as IActivationFunction));
+                HiddenLayer.Add(new Neuron(InputLayer, logistic as IActivationFunction));
 
             for (var i = 0; i < OutputSize; i++)
-                OutputLayer.Add(new Neuron(HiddenLayer, new Logistic() as IActivationFunction));
+                OutputLayer.Add(new Neuron(HiddenLayer, logistic as IActivationFunction));
         }
         #endregion
 
@@ -58,28 +58,43 @@ namespace TomoTable
         /// <param name="input"> input vector </param>
         /// <param name="output"> expected output vector </param>
         /// <returns></returns>
-        public bool train(double maxError, int maxEpochs, List<List<double>> inputsList, List<List<double>> outputsList)
+        public bool Train(double maxError, int maxEpochs, List<double []> inputsList, List<double []> targetsList)
         {
+            var error = 1.0;
+            var numEpochs = 0;
+
+            while (numEpochs < maxEpochs)
+            {
+                var errors = new List<double>();
+                using (var iEnumerator = inputsList.GetEnumerator())
+                using (var tEnumerator = targetsList.GetEnumerator())
+                while (iEnumerator.MoveNext() && tEnumerator.MoveNext())
+                {
+                    double [] input = iEnumerator.Current;
+                    double [] target = tEnumerator.Current;
+
+                    ForwardPropagate(input);
+                    BackPropagate(target);
+                    errors.Add(CalculateError(target));
+                }
+                numEpochs++;
+                error = errors.Average();
+                Console.WriteLine("epoch: " + numEpochs + ", error: " + error);
+                if (error < maxError)
+                    return true;
+            }
             return false;
         }
 
         /// <summary>
-        /// Function evaluating given input signal with current state of network.
+        /// Evaluates given input signal with current state of network.
         /// </summary>
         /// <param name="input"> input to be evaluated </param>
-        /// <returns></returns>
-        public List<double> evaluate(List<double> input)
+        /// <returns> output of network's computations </returns>
+        public double[] Compute(params double[] inputs)
         {
-            return null;
-        }
-
-        /// <summary>
-        /// Function returning a list of results from previously evaluated by network input
-        /// </summary>
-        /// <returns></returns>
-        public List<double> getLastOutput()
-        {
-            return null;
+            ForwardPropagate(inputs);
+            return OutputLayer.Select(a => a.Value).ToArray();
         }
 
         /// <summary>
@@ -88,7 +103,7 @@ namespace TomoTable
         /// <param name="fpath"> path where network should be saved </param>
         public void save(string fpath)
         {
-
+            return;
         }
 
         /// <summary>
@@ -98,23 +113,30 @@ namespace TomoTable
         /// <returns></returns>
         public NeuralNetwork load(string fpath)
         {
-
             return null;
         }
 
-        private void fwdPropagate()
+        private void ForwardPropagate(params double[] inputs)
         {
-            return;
+            var i = 0;
+            InputLayer.ForEach(a => a.Value = inputs[i++]);
+            HiddenLayer.ForEach(a => a.CalculateValue());
+            OutputLayer.ForEach(a => a.CalculateValue());
         }
 
-        private void bckPropagate(List<double> expected)
+        private void BackPropagate(params double[] targets)
         {
-
+            var i = 0;
+            OutputLayer.ForEach(a => a.CalculateGradient(targets[i++]));
+            HiddenLayer.ForEach(a => a.CalculateGradient());
+            HiddenLayer.ForEach(a => a.UpdateWeights(LearningSpeed, LearningMomentum));
+            OutputLayer.ForEach(a => a.UpdateWeights(LearningSpeed, LearningMomentum));
         }
 
-        private void feedInput(List<double> input)
+        private double CalculateError(params double[] targets)
         {
-            return;
+            var i = 0;
+            return OutputLayer.Sum(a => Math.Abs(a.CalculateError(targets[i++])));
         }
 
         #region -- Helpers --

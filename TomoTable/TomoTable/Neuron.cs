@@ -63,7 +63,6 @@ namespace TomoTable
             var prevDelta = BiasDelta;
             BiasDelta = learnRate * Gradient;
             Bias += BiasDelta + momentum * prevDelta;
-
             foreach (var synapse in InputSynapses)
             {
                 prevDelta = synapse.WeightDelta;
