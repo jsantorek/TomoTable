@@ -12,7 +12,7 @@ namespace TomoTable
         public static int InputSize = 2;
 
         // length of output vector, related to image resolution
-        private static int OutputSize = 1;// FileManager.x * FileManager.y;
+        private static int OutputSize = FileManager.OutputHeight * FileManager.OutputWidth;
 
         // learning constants
         private double LearningSpeed;

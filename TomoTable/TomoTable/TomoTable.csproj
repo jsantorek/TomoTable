@@ -58,80 +58,180 @@
     <None Include="training\expected\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="training\expected\0.bmp" />
-    <Content Include="training\expected\1.bmp" />
+    <EmbeddedResource Include="training\expected\0.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\expected\1.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\1.jpg" />
-    <Content Include="training\expected\10.bmp" />
+    <EmbeddedResource Include="training\expected\10.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\10.jpg" />
-    <Content Include="training\expected\11.bmp" />
+    <EmbeddedResource Include="training\expected\11.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\11.jpg" />
-    <Content Include="training\expected\12.bmp" />
+    <EmbeddedResource Include="training\expected\12.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\12.jpg" />
-    <Content Include="training\expected\13.bmp" />
+    <EmbeddedResource Include="training\expected\13.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\13.jpg" />
-    <Content Include="training\expected\14.bmp" />
+    <EmbeddedResource Include="training\expected\14.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\14.jpg" />
-    <Content Include="training\expected\15.BMP" />
+    <EmbeddedResource Include="training\expected\15.BMP">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\15.jpg" />
-    <Content Include="training\expected\16.BMP" />
+    <EmbeddedResource Include="training\expected\16.BMP">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\16.jpg" />
-    <Content Include="training\expected\17.bmp" />
+    <EmbeddedResource Include="training\expected\17.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\17.jpg" />
-    <Content Include="training\expected\18.bmp" />
+    <EmbeddedResource Include="training\expected\18.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\18.jpg" />
-    <Content Include="training\expected\19.bmp" />
+    <EmbeddedResource Include="training\expected\19.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\19.jpg" />
-    <Content Include="training\expected\2.bmp" />
+    <EmbeddedResource Include="training\expected\2.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\2.jpg" />
-    <Content Include="training\expected\20.bmp" />
+    <EmbeddedResource Include="training\expected\20.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\20.jpg" />
-    <Content Include="training\expected\21.bmp" />
+    <EmbeddedResource Include="training\expected\21.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\21.jpg" />
-    <Content Include="training\expected\22.bmp" />
+    <EmbeddedResource Include="training\expected\22.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\22.jpg" />
     <Content Include="training\expected\22.png" />
-    <Content Include="training\expected\23.bmp" />
+    <EmbeddedResource Include="training\expected\23.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\23.jpg" />
-    <Content Include="training\expected\3.bmp" />
+    <EmbeddedResource Include="training\expected\3.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\3.jpg" />
-    <Content Include="training\expected\4.bmp" />
+    <EmbeddedResource Include="training\expected\4.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\4.jpg" />
-    <Content Include="training\expected\5.bmp" />
+    <EmbeddedResource Include="training\expected\5.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\5.jpg" />
-    <Content Include="training\expected\6.bmp" />
+    <EmbeddedResource Include="training\expected\6.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\6.jpg" />
-    <Content Include="training\expected\7.bmp" />
+    <EmbeddedResource Include="training\expected\7.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\7.jpg" />
-    <Content Include="training\expected\8.bmp" />
+    <EmbeddedResource Include="training\expected\8.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\8.jpg" />
-    <Content Include="training\expected\9.bmp" />
+    <EmbeddedResource Include="training\expected\9.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="training\expected\9.jpg" />
-    <Content Include="training\input\0.txt" />
-    <Content Include="training\input\1.txt" />
-    <Content Include="training\input\10 bb.txt" />
-    <Content Include="training\input\11 bb.txt" />
-    <Content Include="training\input\12 bb.txt" />
-    <Content Include="training\input\13 bb.txt" />
-    <Content Include="training\input\14 bb.txt" />
-    <Content Include="training\input\15 bb.txt" />
-    <Content Include="training\input\16 bb.txt" />
-    <Content Include="training\input\17 bb.txt" />
-    <Content Include="training\input\18 bb.txt" />
-    <Content Include="training\input\19 bb.txt" />
-    <Content Include="training\input\2 bb.txt" />
-    <Content Include="training\input\2.txt" />
-    <Content Include="training\input\20 bb.txt" />
-    <Content Include="training\input\21 bb.txt" />
-    <Content Include="training\input\22 bb.txt" />
-    <Content Include="training\input\23 bb.txt" />
-    <Content Include="training\input\3 bb.txt" />
-    <Content Include="training\input\3.txt" />
-    <Content Include="training\input\4 bb.txt" />
-    <Content Include="training\input\5 bb.txt" />
-    <Content Include="training\input\6 bb.txt" />
-    <Content Include="training\input\7 bb.txt" />
-    <Content Include="training\input\8 bb.txt" />
-    <Content Include="training\input\9 bb.txt" />
+    <EmbeddedResource Include="training\input\0.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\10 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\11 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\12 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\13 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\14 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\15 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\16 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\17 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\18 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\19 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\2 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\20 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\21 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\22 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\23 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\3 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\4 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\5 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\6 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\7 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\8 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="training\input\9 bb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

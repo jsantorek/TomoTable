@@ -25,7 +25,7 @@ namespace TomoTable
             System.Drawing.Bitmap OutputImage = new System.Drawing.Bitmap(fpath);
             List<double> OutputTable = new List<double>(OutputWidth*OutputHeight);
 
-            if (OutputImage.Width > OutputWidth || OutputImage.Height > OutputHeight)
+            if (OutputImage.Width != OutputWidth || OutputImage.Height != OutputHeight)
             {
                 throw new System.IO.IOException(); //maybe write up a new exception?
             }
@@ -49,16 +49,16 @@ namespace TomoTable
         /// <param name="output"> output data of neural network </param>
         public static void OUTtoBMP(string fpath, double [] output)
         {
-            Bitmap OutputImage = new Bitmap(OutputWidth, OutputHeight, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
+            Bitmap OutputImage = new Bitmap(OutputWidth, OutputHeight);
 
             for (int i = 0; i < OutputWidth; i++)
             {
                 for (int j = 0; j < OutputHeight; j++)
                 { 
-                    OutputImage.SetPixel(i, j, ToColor(output[i*OutputHeight+j]));
+                    OutputImage.SetPixel(i, j, ToColor(output[(i*OutputHeight)+j]));
                 }
             }
-
+            OutputImage.Save(fpath);
         }
 
 
@@ -80,7 +80,8 @@ namespace TomoTable
                     {
                         if (!double.TryParse(number, out double value))
                         {
-                            throw new System.IO.IOException(); //maybe a new one?
+                            continue;
+                            //throw new System.IO.IOException(); //maybe a new one?
                         }
                         else if (value != 0) //the 0 values are ultimately useless and the neural network really doesn't care either way
                         {
