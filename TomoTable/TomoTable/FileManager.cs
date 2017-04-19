@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace TomoTable
 {
@@ -20,8 +21,24 @@ namespace TomoTable
         /// <returns></returns>
         public static double [] BMPtoOUT(string fpath)
         {
+            System.Drawing.Bitmap OutputImage = new System.Drawing.Bitmap(fpath);
+            List<double> OutputTable = new List<double>(x*y);
 
-            return null;
+            if (OutputImage.Width > x || OutputImage.Height > y)
+            {
+                throw new Exception(); //probably create a special exception for that
+            }
+
+            for (int i = 0; i < OutputImage.Width; i++)
+            {
+                for (int j = 0; j < OutputImage.Height; j++)
+                {
+                    Color originalPixel = OutputImage.GetPixel(i, j); 
+                    OutputTable.Add((originalPixel.R * 0.3) + (originalPixel.G * 0.59) + (originalPixel.B * 0.11)); //handle non-greyscale testing images, just in case
+                }
+            }
+
+            return OutputTable.ToArray();
         }
 
         /// <summary>
@@ -31,6 +48,21 @@ namespace TomoTable
         /// <param name="output"> output data of neural network </param>
         public static void OUTtoBMP(string fpath, double [] output)
         {
+            int[] intoutput = new int[output.Length];
+            for (int i = 0; i < output.Length; i++)
+            {
+                intoutput[i] = (int) output[i] * 65535; //quick and dirty change to format16bppgrayscale
+            }
+
+            Bitmap OutputImage = new Bitmap(x, y, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
+
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                { 
+                    OutputImage.SetPixel(i, j, Color.FromArgb(intoutput[i*y+j], intoutput[i * y + j], intoutput[i * y + j]));
+                }
+            }
 
         }
 
