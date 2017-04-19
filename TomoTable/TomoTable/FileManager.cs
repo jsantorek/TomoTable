@@ -35,7 +35,7 @@ namespace TomoTable
                 for (int j = 0; j < OutputImage.Height; j++)
                 {
                     Color originalPixel = OutputImage.GetPixel(i, j); 
-                    OutputTable.Add(((originalPixel.R * 0.3) + (originalPixel.G * 0.59) + (originalPixel.B * 0.11))/255); //handle non-greyscale testing images, just in case
+                    OutputTable.Add(ToOutput(originalPixel)); //handle non-greyscale testing images, just in case
                 }
             }
 
@@ -49,19 +49,13 @@ namespace TomoTable
         /// <param name="output"> output data of neural network </param>
         public static void OUTtoBMP(string fpath, double [] output)
         {
-            int[] intoutput = new int[output.Length];
-            for (int i = 0; i < output.Length; i++)
-            {
-                intoutput[i] = (int) output[i] * 255; //quick and dirty change to ints
-            }
-
             Bitmap OutputImage = new Bitmap(x, y, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
 
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 { 
-                    OutputImage.SetPixel(i, j, Color.FromArgb(intoutput[i*y+j], intoutput[i * y + j], intoutput[i * y + j]));
+                    OutputImage.SetPixel(i, j, ToColor(output[i*y+j]));
                 }
             }
 
@@ -81,11 +75,10 @@ namespace TomoTable
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    double value;
                     string[] numbers = line.Split(' ');
                     foreach (string number in numbers)
                     {
-                        if (!double.TryParse(number, out value))
+                        if (!double.TryParse(number, out double value))
                         {
                             throw new Exception(); //possibly some IO exception i dunno
                         }
