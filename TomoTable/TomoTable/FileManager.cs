@@ -11,8 +11,8 @@ namespace TomoTable
     class FileManager
     {
         // .bmp resolution
-        public static int x = 64;
-        public static int y = 32;
+        public static int OutputWidth = 64;
+        public static int OutputHeight = 32;
 
         /// <summary>
         /// Function converting .bmp file into output data of neural network.
@@ -23,11 +23,11 @@ namespace TomoTable
         public static double [] BMPtoOUT(string fpath)
         {
             System.Drawing.Bitmap OutputImage = new System.Drawing.Bitmap(fpath);
-            List<double> OutputTable = new List<double>(x*y);
+            List<double> OutputTable = new List<double>(OutputWidth*OutputHeight);
 
-            if (OutputImage.Width > x || OutputImage.Height > y)
+            if (OutputImage.Width > OutputWidth || OutputImage.Height > OutputHeight)
             {
-                throw new Exception(); //probably create a special exception for that
+                throw new System.IO.IOException(); //maybe write up a new exception?
             }
 
             for (int i = 0; i < OutputImage.Width; i++)
@@ -35,7 +35,7 @@ namespace TomoTable
                 for (int j = 0; j < OutputImage.Height; j++)
                 {
                     Color originalPixel = OutputImage.GetPixel(i, j); 
-                    OutputTable.Add(ToOutput(originalPixel)); //handle non-greyscale testing images, just in case
+                    OutputTable.Add(ToOutput(originalPixel));
                 }
             }
 
@@ -49,13 +49,13 @@ namespace TomoTable
         /// <param name="output"> output data of neural network </param>
         public static void OUTtoBMP(string fpath, double [] output)
         {
-            Bitmap OutputImage = new Bitmap(x, y, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
+            Bitmap OutputImage = new Bitmap(OutputWidth, OutputHeight, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
 
-            for (int i = 0; i < x; i++)
+            for (int i = 0; i < OutputWidth; i++)
             {
-                for (int j = 0; j < y; j++)
+                for (int j = 0; j < OutputHeight; j++)
                 { 
-                    OutputImage.SetPixel(i, j, ToColor(output[i*y+j]));
+                    OutputImage.SetPixel(i, j, ToColor(output[i*OutputHeight+j]));
                 }
             }
 
@@ -80,7 +80,7 @@ namespace TomoTable
                     {
                         if (!double.TryParse(number, out double value))
                         {
-                            throw new Exception(); //possibly some IO exception i dunno
+                            throw new System.IO.IOException(); //maybe a new one?
                         }
                         else if (value != 0) //the 0 values are ultimately useless and the neural network really doesn't care either way
                         {
@@ -106,7 +106,7 @@ namespace TomoTable
         /// <summary>
         /// Converts color from .bmp file into expected output of single neuron (value between 0.0 and 1.0)
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="c">A Color read fom an image output</param>
         /// <returns></returns>
         private static double ToOutput(Color c)
         {
