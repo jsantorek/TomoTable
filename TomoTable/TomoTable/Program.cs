@@ -15,47 +15,19 @@ namespace TomoTable
             List<double[]> targets = new List<double[]>();
             List<double[]> tests = new List<double[]>();
 
-            /*inputs.Add(new double[] { 1.0, 12.0 });
-            targets.Add(new double[] { 0.0 });
+            for (int number = 0; number < 23; number++)
+            {
+                inputs.Add(FileManager.DATAtoIN(string.Format(@"training\input\{0} bb.txt", number)));
+                targets.Add(FileManager.BMPtoOUT(string.Format(@"training\expected\{0}.bmp", number)));
+            }
 
-            inputs.Add(new double[] { 3.0, 5.6 });
-            targets.Add(new double[] { 0.0 });
-
-            inputs.Add(new double[] { 1.1, 5.9 });
-            targets.Add(new double[] { 0.0 });
-
-            inputs.Add(new double[] { 11.0, 0.0 });
-            targets.Add(new double[] { 1.0 });
-
-            inputs.Add(new double[] { 9.0, 3.2 });
-            targets.Add(new double[] { 1.0 });
-
-            inputs.Add(new double[] { 9.007, 0.12 });
-            targets.Add(new double[] { 1.0 });
-
-            tests.Add(new double [] { 34.2, 4.3 });
-            tests.Add(new double[] { 11.4, 0.3 });
-            tests.Add(new double[] { 0.0002, 5.3 });
-            tests.Add(new double[] { 2.4, 3.3 });*/
-
-            inputs.Add(FileManager.DATAtoIN(@"training\input\0.txt"));
-            inputs.Add(FileManager.DATAtoIN(@"training\input\1.txt"));
-            inputs.Add(FileManager.DATAtoIN(@"training\input\2.txt"));
-            inputs.Add(FileManager.DATAtoIN(@"training\input\3.txt"));
-
-            targets.Add(FileManager.BMPtoOUT(@"training\expected\0.bmp"));
-            targets.Add(FileManager.BMPtoOUT(@"training\expected\1.bmp"));
-            targets.Add(FileManager.BMPtoOUT(@"training\expected\2.bmp"));
-            targets.Add(FileManager.BMPtoOUT(@"training\expected\3.bmp"));
-
-
-            tests.Add(FileManager.DATAtoIN(@"training\input\4 bb.txt"));
+            tests.Add(FileManager.DATAtoIN(@"training\input\23 bb.txt"));
 
 
 
             NeuralNetwork net = new NeuralNetwork(2);
 
-            net.Train(0.1, 500, inputs, targets);
+            net.Train(0.1, 1000, inputs, targets);
 
             foreach ( var test in tests)
             {
