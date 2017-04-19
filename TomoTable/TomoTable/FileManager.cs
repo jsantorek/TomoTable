@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.IO;
 
 namespace TomoTable
 {
@@ -71,9 +72,31 @@ namespace TomoTable
         /// Function converting data read from table into into input for neural network.
         /// </summary>
         /// <param name="fpath"> path of file containing table readings in matrix form </param>
-        public static void DATAtoIN(string fpath)
+        public static double [] DATAtoIN(string fpath)
         {
+            List<double> inputData = new List<double>();
 
+            using (TextReader reader = File.OpenText(fpath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    double value;
+                    string[] numbers = line.Split(' ');
+                    foreach (string number in numbers)
+                    {
+                        if (!double.TryParse(number, out value))
+                        {
+                            throw new Exception(); //possibly some IO exception i dunno
+                        }
+                        else if (value != 0) //the 0 values are ultimately useless and the neural network really doesn't care either way
+                        {
+                            inputData.Add(value);
+                        }
+                    }
+                }
+            }
+            return inputData.ToArray();
         }
 
         /// <summary>
@@ -81,9 +104,10 @@ namespace TomoTable
         /// </summary>
         /// <param name="o"> output of single neuron </param>
         /// <returns></returns>
-        private static double ToColor(double o)
+        private static Color ToColor(double o)
         {
-            return 0.0;
+            int color = (int)(o * 255);
+            return Color.FromArgb(color, color, color);
         }
 
         /// <summary>
@@ -91,10 +115,9 @@ namespace TomoTable
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        private static double ToOutput(double c)
+        private static double ToOutput(Color c)
         {
-
-            return 0.0;
+            return (((c.R * 0.3) + (c.G * 0.59) + (c.B * 0.11)) / 255);
         }
     }
 }
