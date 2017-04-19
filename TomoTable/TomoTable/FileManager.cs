@@ -34,7 +34,7 @@ namespace TomoTable
                 for (int j = 0; j < OutputImage.Height; j++)
                 {
                     Color originalPixel = OutputImage.GetPixel(i, j); 
-                    OutputTable.Add((originalPixel.R * 0.3) + (originalPixel.G * 0.59) + (originalPixel.B * 0.11)); //handle non-greyscale testing images, just in case
+                    OutputTable.Add(((originalPixel.R * 0.3) + (originalPixel.G * 0.59) + (originalPixel.B * 0.11))/255); //handle non-greyscale testing images, just in case
                 }
             }
 
@@ -51,7 +51,7 @@ namespace TomoTable
             int[] intoutput = new int[output.Length];
             for (int i = 0; i < output.Length; i++)
             {
-                intoutput[i] = (int) output[i] * 65535; //quick and dirty change to format16bppgrayscale
+                intoutput[i] = (int) output[i] * 255; //quick and dirty change to ints
             }
 
             Bitmap OutputImage = new Bitmap(x, y, System.Drawing.Imaging.PixelFormat.Format16bppGrayScale);
