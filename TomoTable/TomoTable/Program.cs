@@ -15,24 +15,30 @@ namespace TomoTable
             List<double[]> targets = new List<double[]>();
             List<double[]> tests = new List<double[]>();
 
-            for (int number = 0; number < 23; number++)
+            string networkfile = "network.bin";
+
+            for (int number = 0; number <= 23; number++)
             {
                 inputs.Add(FileManager.DATAtoIN(string.Format(@"training\input\{0} bb.txt", number)));
                 targets.Add(FileManager.BMPtoOUT(string.Format(@"training\expected\{0}.bmp", number)));
             }
 
-            tests.Add(FileManager.DATAtoIN(@"training\input\23 bb.txt"));
+            //tests.Add(FileManager.DATAtoIN(@"training\input\23 bb.txt"));
+            tests = inputs;
 
 
+            //NeuralNetwork net = new NeuralNetwork(498);
+            NeuralNetwork net = NeuralNetwork.LoadFromFile(networkfile);
 
-            NeuralNetwork net = new NeuralNetwork(2);
+            net.Train(0.1, 10, inputs, targets);
 
-            net.Train(0.1, 1000, inputs, targets);
-
-            foreach ( var test in tests)
+            net.SaveToFile(networkfile);
+            
+            for(int i = 0; i < tests.Count; i++)
             {
-                FileManager.OUTtoBMP(@"asdf.bmp",net.Compute(test));
+                FileManager.OUTtoBMP(string.Format(@"training\output\{0}.bmp", i), net.Compute(tests[i]));
             }
+            
             while (true) ;
         }
     }

@@ -13,6 +13,7 @@ namespace TomoTable
         // .bmp resolution
         public static int OutputWidth = 64;
         public static int OutputHeight = 32;
+        public static int OutputMax = 255;
 
         /// <summary>
         /// Function converting .bmp file into output data of neural network.
@@ -78,7 +79,8 @@ namespace TomoTable
                     string[] numbers = line.Split(' ');
                     foreach (string number in numbers)
                     {
-                        if (!double.TryParse(number, out double value))
+                        double value;
+                        if (!double.TryParse(number, out value))
                         {
                             continue;
                             //throw new System.IO.IOException(); //maybe a new one?
@@ -100,7 +102,7 @@ namespace TomoTable
         /// <returns></returns>
         private static Color ToColor(double o)
         {
-            int color = (int)(o * 255);
+            int color = (int)(o * OutputMax);
             return Color.FromArgb(color, color, color);
         }
 
@@ -111,7 +113,7 @@ namespace TomoTable
         /// <returns></returns>
         private static double ToOutput(Color c)
         {
-            return (((c.R * 0.3) + (c.G * 0.59) + (c.B * 0.11)) / 255);
+            return (((c.R * 0.3) + (c.G * 0.59) + (c.B * 0.11)) / OutputMax);
         }
     }
 }

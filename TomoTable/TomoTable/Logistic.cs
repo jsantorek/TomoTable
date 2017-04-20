@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TomoTable
 {
+    [Serializable]
     class Logistic : IActivationFunction
     {
         public double f(double x)

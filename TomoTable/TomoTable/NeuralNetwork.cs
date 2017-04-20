@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TomoTable
 {
+    [Serializable]
     class NeuralNetwork
     {
-        // length of input vectors
-        public static int InputSize = 2;
-
         // length of output vector, related to image resolution
         private static int OutputSize = FileManager.OutputHeight * FileManager.OutputWidth;
+
+        // length of input vector
+        private static int InputSize = 419;
 
         // learning constants
         private double LearningSpeed;
@@ -101,19 +104,39 @@ namespace TomoTable
         /// Function saving current state of neural network to file specified.
         /// </summary>
         /// <param name="fpath"> path where network should be saved </param>
-        public void save(string fpath)
+        public void SaveToFile(string fpath)
         {
+            Console.WriteLine("Saving file to " + fpath);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            using (Stream stream = File.Open(fpath, FileMode.Create))
+            {
+                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                binaryFormatter.Serialize(stream, this);
+            }
+            sw.Stop();
+            Console.WriteLine(String.Format("File saved, time: {0}", sw.Elapsed));
             return;
         }
 
         /// <summary>
-        /// Constructs new network in state that is loaded from file specified.
+        /// Restores network from file.
         /// </summary>
-        /// <param name="fpath"> path to file containing saved network </param>
-        /// <returns></returns>
-        public NeuralNetwork load(string fpath)
+        /// <param name="fpath"> path to file in which network was saved </param>
+        static public NeuralNetwork LoadFromFile(string fpath)
         {
-            return null;
+            Console.WriteLine("Loading file from " + fpath);
+            Stopwatch sw = new Stopwatch();
+            Object loaded;
+            sw.Start();
+            using (Stream stream = File.Open(fpath, FileMode.Open))
+            {
+                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                loaded = binaryFormatter.Deserialize(stream);
+            }
+            sw.Stop();
+            Console.WriteLine(String.Format("File loaded, time: {0}", sw.Elapsed));
+            return (NeuralNetwork)loaded;
         }
 
         private void ForwardPropagate(params double[] inputs)
@@ -136,7 +159,7 @@ namespace TomoTable
         private double CalculateError(params double[] targets)
         {
             var i = 0;
-            return OutputLayer.Sum(a => Math.Abs(a.CalculateError(targets[i++])));
+            return OutputLayer.Sum(a => Math.Abs(a.CalculateError(targets[i++])))/FileManager.OutputMax;
         }
 
         #region -- Helpers --
