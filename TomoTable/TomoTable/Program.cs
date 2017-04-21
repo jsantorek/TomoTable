@@ -27,10 +27,10 @@ namespace TomoTable
             tests = inputs;
 
 
-            NeuralNetwork net = new NeuralNetwork(1500);
+            NeuralNetwork net = new NeuralNetwork(500);
             //NeuralNetwork net = NeuralNetwork.LoadFromFile(networkfile);
 
-            net.Train(0.1, 10, inputs, targets);
+            net.Train(0.1, 5, inputs, targets);
 
             //net.SaveToFile(networkfile);
             

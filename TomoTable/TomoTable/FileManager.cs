@@ -73,7 +73,8 @@ namespace TomoTable
 
             using (TextReader reader = File.OpenText(fpath))
             {
-                string line;
+                // skip first line containing matrix dimensions
+                string line = reader.ReadLine();
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] numbers = line.Split(' ');
@@ -85,13 +86,16 @@ namespace TomoTable
                             continue;
                             //throw new System.IO.IOException(); //maybe a new one?
                         }
-                        else if (value != 0 && value != 32) //the 0 values are ultimately useless and the neural network really doesn't care either way
+                        //the 0 values are ultimately useless and the neural network really doesn't care either way
+                        // actually a non biased network does care, neither constant nor independent on output data should be passed
+                        else if (value != 0) 
                         {
                             inputData.Add(value);
                         }
                     }
                 }
             }
+            Console.WriteLine(inputData.Count);
             return inputData.ToArray();
         }
 
