@@ -15,7 +15,7 @@ namespace TomoTable
         private static int OutputSize = FileManager.OutputHeight * FileManager.OutputWidth;
 
         // length of input vector
-        private static int InputSize = 419;
+        private static int InputSize = 498;
 
         // learning constants
         private double LearningSpeed;

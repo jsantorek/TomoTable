@@ -85,7 +85,7 @@ namespace TomoTable
                             continue;
                             //throw new System.IO.IOException(); //maybe a new one?
                         }
-                        else if (value != 0) //the 0 values are ultimately useless and the neural network really doesn't care either way
+                        else if (value != 0 && value != 32) //the 0 values are ultimately useless and the neural network really doesn't care either way
                         {
                             inputData.Add(value);
                         }
