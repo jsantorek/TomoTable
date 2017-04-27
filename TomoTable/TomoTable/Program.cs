@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,26 +16,30 @@ namespace TomoTable
             List<double[]> targets = new List<double[]>();
             List<double[]> tests = new List<double[]>();
 
-            string networkfile = "network.bin";
+            string networkFile = "network.bin";
 
-            for (int number = 0; number <= 23; number++)
+            string[] inputFiles = Directory.GetFiles(@"training\input\");
+
+            foreach(String file in inputFiles)
             {
-                inputs.Add(FileManager.DATAtoIN(string.Format(@"training\input\{0} bb.txt", number)));
-                targets.Add(FileManager.BMPtoOUT(string.Format(@"training\expected\{0}.bmp", number)));
+                String testName = Path.GetFileNameWithoutExtension(file);
+                Console.WriteLine(testName);
+                inputs.Add(FileManager.DATAtoIN(@"training\input\"+testName +".txt"));
+                targets.Add(FileManager.BMPtoOUT(@"training\expected\"+testName +".bmp"));
             }
 
             //tests.Add(FileManager.DATAtoIN(@"training\input\23 bb.txt"));
             tests = inputs;
 
 
-            NeuralNetwork net = new NeuralNetwork(500);
-            //NeuralNetwork net = NeuralNetwork.LoadFromFile(networkfile);
+            NeuralNetwork net = new NeuralNetwork(1500);
+            //NeuralNetwork net = NeuralNetwork.LoadFromFile(networkFile);
 
-            net.Train(0.1, 5, inputs, targets);
+            net.Train(0.1, 3, inputs, targets);
 
-            //net.SaveToFile(networkfile);
-            
-            for(int i = 0; i < tests.Count; i++)
+            //net.SaveToFile(networkFile);
+
+            for (int i = 0; i < tests.Count; i++)
             {
                 FileManager.OUTtoBMP(string.Format(@"training\output\{0}.bmp", i), net.Compute(tests[i]));
             }

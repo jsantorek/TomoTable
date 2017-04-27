@@ -11,8 +11,8 @@ namespace TomoTable
     class FileManager
     {
         // .bmp resolution
-        public static int OutputWidth = 64;
-        public static int OutputHeight = 32;
+        public static int OutputWidth = 40;
+        public static int OutputHeight = 30;
         public static int OutputMax = 255;
 
         /// <summary>
@@ -95,7 +95,6 @@ namespace TomoTable
                     }
                 }
             }
-            Console.WriteLine(inputData.Count);
             return inputData.ToArray();
         }
 

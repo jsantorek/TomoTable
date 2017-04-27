@@ -165,7 +165,7 @@ namespace TomoTable
         #region -- Helpers --
         public static double GetRandom()
         {
-            return 2 * Random.NextDouble() - 1;
+            return 0.0000002 * Random.NextDouble() - 1;
         }
         #endregion
     }
