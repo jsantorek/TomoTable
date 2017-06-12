@@ -31,11 +31,11 @@ namespace TomoTable
             //tests.Add(FileManager.DATAtoIN(@"training\input\23 bb.txt"));
             tests = inputs;
 
-
-            NeuralNetwork net = new NeuralNetwork(1500);
+            double lSpeed = 0.6, lMom = 0.95;
+            NeuralNetwork net = new NeuralNetwork(750, lSpeed, lMom);
             //NeuralNetwork net = NeuralNetwork.LoadFromFile(networkFile);
 
-            net.Train(0.1, 3, inputs, targets);
+            net.Train(0.1, 10, inputs, targets);
 
             //net.SaveToFile(networkFile);
 

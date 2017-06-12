@@ -38,7 +38,8 @@ namespace TomoTable
             HiddenLayer = new List<Neuron>();
             OutputLayer = new List<Neuron>();
 
-            Logistic logistic = new Logistic();
+            LogisticAF logistic = new LogisticAF();
+            LinearAF linear = new LinearAF();
 
             for (var i = 0; i < InputSize; i++)
                 InputLayer.Add(new Neuron(logistic as IActivationFunction));
